@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import './style.css'
 
@@ -10,7 +10,7 @@ const Filme = () => {
     const {id}= useParams()
     const [movie, setMovie]= useState({})
     const [loading, setLoading]=useState(true)
-
+    const navigation= useNavigate()
     useEffect(()=>{
       async function loadMovie(){
         await api.get(`/movie/${id}`,{
@@ -19,10 +19,24 @@ const Filme = () => {
                 language:'pt-BR',
             }
         }).then((response)=> setMovie(response.data))
+        .catch(()=> navigation ('/', {replace: true}))
         setLoading(false)
        }
        loadMovie()
-    },[])
+    },[navigation, id])
+
+    
+    function saveMovie(){
+        const minhaLista= localStorage.getItem('@primeFlix') 
+       let saveMovies= JSON.parse(minhaLista) || []
+       const hasFilme= saveMovies.some((item)=>item.id===movie.id)
+       if(hasFilme){
+        console.log('ja esta salvo')
+        return
+       }
+       saveMovies.push(movie)
+       localStorage.setItem('@primeFlix', JSON.stringify(saveMovies))
+    }
 
     if(loading){
         return(
@@ -40,8 +54,8 @@ const Filme = () => {
           <span>{movie.overview}</span>
           <strong>Avaliação: {movie.vote_average}</strong>
           <div className="area-buttons">
-            <button>Salvar</button>
-            <button><a href="#">Trailer</a></button>
+            <button onClick={saveMovie}>Salvar</button>
+            <button><a rel='external' target="_blank" href={`https://www.youtube.com/results?search_query=${movie.title} trailer`}>Trailer</a></button>
           </div>
         </div>
      );
