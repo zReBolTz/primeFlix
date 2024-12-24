@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    font-size: 40px;
+    font-weight: bold;
+    flex-direction: column;
+}
+
+.container a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    font-size: 24px;
+    text-decoration: none;
+    background-color: #116FEB;
+    color: #fff;
+    width: 300px;
+    border-radius: 20px;
+}
