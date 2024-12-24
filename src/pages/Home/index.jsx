@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
     const [filmes, setFilmes]= useState([])
+    const [loading, setLoading]=useState(true)
      useEffect( ()=>{
       async function loadMovies() {
         const response= await api.get('movie/now_playing',{
@@ -15,11 +16,19 @@ const Home = () => {
             }
         })
   setFilmes(response.data.results.slice(0,10))
+  setLoading(false)
     }
         loadMovies()
     },[])
+    if(loading){
+        return(
+            <div>
+                <h2>Carregando Filmes...</h2>
+            </div>
+        )
+    }
     return ( 
-       <div className="container">
+       <div>
         <div className="lista-filmes">
            {filmes.map((filmes)=>{
            return(
