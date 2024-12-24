@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home/index.jsx'
 import Filme from './pages/Filme/index.jsx'
 import Error from './pages/Error/error.jsx'
+import Favoritos from './pages/Favoritos/Favoritos.jsx'
 
 const router= createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router= createBrowserRouter([
     {
       path:'filme/:id',
       element:<Filme/>
+    },
+    {
+      path:'favoritos',
+      element:<Favoritos/>
     }
   ]
   }
