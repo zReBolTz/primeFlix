@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import './style.css'
+import { toast } from "react-toastify";
 
 
 
@@ -31,11 +32,12 @@ const Filme = () => {
        let saveMovies= JSON.parse(minhaLista) || []
        const hasFilme= saveMovies.some((item)=>item.id===movie.id)
        if(hasFilme){
-        console.log('ja esta salvo')
+        toast.warn('Você já salvou esse filme')
         return
        }
        saveMovies.push(movie)
        localStorage.setItem('@primeFlix', JSON.stringify(saveMovies))
+       toast.success('Filme salvo com sucesso!')
     }
 
     if(loading){
